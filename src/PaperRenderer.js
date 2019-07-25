@@ -66,6 +66,7 @@ function applyGroupProps(instance, props, prevProps = {}) {
   }
   if (!arePointsEqual(props.pivot, prevProps.pivot)) {
     instance.pivot = props.pivot
+    instance.position = props.position
   }
   if (!arePointsEqual(props.position, prevProps.position)) {
     instance.position = props.position
@@ -167,6 +168,16 @@ function applyPathProps(instance, props, prevProps = {}) {
 }
 
 function applyRectangleProps(instance, props, prevProps = {}) {
+  if (! (arePointsEqual(props.from, prevProps.from) && arePointsEqual(props.to, prevProps.to))) {
+    // create new instance
+    const newInstance = new Path.Rectangle(props)
+    newInstance._applyProps = applyRectangleProps
+    instance.replaceWith(newInstance)
+    // swap instance
+    fiberNode.stateNode = newInstance
+    fiberNode.alternate.stateNode = newInstance;
+    instance = newInstance
+  }
   applyPathProps(instance, props, prevProps)
   if (!arePointsEqual(props.size, prevProps.size)) {
     instance.scale(
@@ -175,6 +186,22 @@ function applyRectangleProps(instance, props, prevProps = {}) {
     )
   }
 }
+
+function applyLineProps(instance, props, prevProps = {}, fiberNode) {
+  if (! (arePointsEqual(props.from, prevProps.from) && arePointsEqual(props.to, prevProps.to))) {
+    // create new instance
+    const newInstance = new Path.Rectangle(props)
+    newInstance._applyProps = applyRectangleProps
+    instance.replaceWith(newInstance)
+    // swap instance
+    fiberNode.stateNode = newInstance
+    fiberNode.alternate.stateNode = newInstance;
+    instance = newInstance
+  }
+  applyPathProps(instance, props, prevProps)
+
+}
+
 
 function applyCircleProps(instance, props, prevProps = {}) {
   applyPathProps(instance, props, prevProps)
@@ -296,7 +323,7 @@ const PaperRenderer = Reconciler({
         break
       case TYPES.LINE:
         instance = new Path.Line(paperProps)
-        instance._applyProps = applyPathProps
+        instance._applyProps = applyLineProps
         break
       case TYPES.PATH:
         instance = new Path(paperProps)
@@ -481,7 +508,7 @@ const PaperRenderer = Reconciler({
   },
 
   commitUpdate(instance, updatePayload, type, oldProps, newProps, paperScope) {
-    instance._applyProps(instance, newProps, oldProps)
+    instance._applyProps(instance, newProps, oldProps, paperScope)
   },
 })
 
