@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+    docker:
+      - image: circleci/node:8.16
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "06:40:d7:45:f1:59:0c:f4:b5:47:1f:c0:23:60:9e:36"
+      - run:
+          name: merge develop into dist
+          command: |
+            git config user.email "kota65535@gmail.com"
+            git config user.name "Tomohiko Ozawa"
+            git checkout -t origin/dist
+            git merge master --no-edit
+      - run:
+          name: build
+          command: |
+            npm install
+            npm run build
+      - run:
+          name: commit & push
+          command: |
+            git add . --all
+            git commit -m "committed by CI"
+            git push origin dist
