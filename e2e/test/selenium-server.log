@@ -1,0 +1,53 @@
+03:23:36.749 INFO [GridLauncherV3.parse] - Selenium server version: 3.141.5, revision: d54ebd709a
+03:23:36.825 INFO [GridLauncherV3.lambda$buildLaunchers$3] - Launching a standalone Selenium Server on port 4000
+2019-07-28 03:23:36.882:INFO::main: Logging initialized @439ms to org.seleniumhq.jetty9.util.log.StdErrLog
+03:23:37.124 INFO [WebDriverServlet.<init>] - Initialising WebDriverServlet
+03:23:37.231 INFO [SeleniumServer.boot] - Selenium Server is up and running on port 4000
+03:23:37.527 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+  "acceptSslCerts": true,
+  "browserName": "chrome",
+  "name": "Specs"
+}
+03:23:37.528 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 75.0.3770.90 (a6dcaf7e3ec6f70a194cc25e8149475c6590e025-refs/branch-heads/3770@{#1003}) on port 36868
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+03:23:39.779 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+03:23:39.814 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session a8e7bc7882ada6e52976eb091c7c1dbd (org.openqa.selenium.chrome.ChromeDriverService)
+03:23:42.361 INFO [ActiveSessions$1.onStop] - Removing session a8e7bc7882ada6e52976eb091c7c1dbd (org.openqa.selenium.chrome.ChromeDriverService)
+03:23:42.368 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+  "acceptSslCerts": true,
+  "browserName": "chrome",
+  "name": "Specs"
+}
+03:23:42.368 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 75.0.3770.90 (a6dcaf7e3ec6f70a194cc25e8149475c6590e025-refs/branch-heads/3770@{#1003}) on port 38123
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+03:23:43.375 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+03:23:43.379 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session ccb9f9f298510f5d442dcd0011472dd3 (org.openqa.selenium.chrome.ChromeDriverService)
+03:23:51.838 INFO [ActiveSessions$1.onStop] - Removing session ccb9f9f298510f5d442dcd0011472dd3 (org.openqa.selenium.chrome.ChromeDriverService)
+03:23:51.848 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+  "acceptSslCerts": true,
+  "browserName": "chrome",
+  "name": "Specs"
+}
+03:23:51.849 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 75.0.3770.90 (a6dcaf7e3ec6f70a194cc25e8149475c6590e025-refs/branch-heads/3770@{#1003}) on port 37898
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+03:23:52.843 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+03:23:52.846 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session b086ca93bd83d34973f64eda06faccbf (org.openqa.selenium.chrome.ChromeDriverService)
+03:24:02.238 INFO [ActiveSessions$1.onStop] - Removing session b086ca93bd83d34973f64eda06faccbf (org.openqa.selenium.chrome.ChromeDriverService)
+03:24:02.248 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+  "acceptSslCerts": true,
+  "browserName": "chrome",
+  "name": "Specs"
+}
+03:24:02.248 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 75.0.3770.90 (a6dcaf7e3ec6f70a194cc25e8149475c6590e025-refs/branch-heads/3770@{#1003}) on port 9349
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+03:24:03.219 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+03:24:03.221 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 58edbcfa1934b45b0ad4f0657f42c717 (org.openqa.selenium.chrome.ChromeDriverService)
+03:24:11.613 INFO [ActiveSessions$1.onStop] - Removing session 58edbcfa1934b45b0ad4f0657f42c717 (org.openqa.selenium.chrome.ChromeDriverService)
