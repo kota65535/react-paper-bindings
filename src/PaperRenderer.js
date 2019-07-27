@@ -2,47 +2,30 @@
 
 import Reconciler from 'react-reconciler'
 import {
+  unstable_cancelCallback as cancelDeferredCallback,
   unstable_now as now,
   unstable_scheduleCallback as scheduleDeferredCallback,
-  unstable_cancelCallback as cancelDeferredCallback,
 } from 'scheduler';
 import invariant from 'fbjs/lib/invariant'
 import emptyObject from 'fbjs/lib/emptyObject'
 
-import {
-  Group,
-  Item,
-  Layer,
-  Path,
-  PointText,
-  Raster,
-  Tool,
-} from 'paper/dist/paper-core'
+import {Group, Item, Layer, Path, PointText, Raster, Tool,} from 'paper/dist/paper-core'
 
 import TYPES from './types'
 
-import { arePointsEqual } from './utils'
-
-function applyItemProps(instance, props, prevProps = {}) {
-  if (props.blendMode !== prevProps.blendMode) {
-    instance.blendMode = props.blendMode
-  }
-  if (props.clipMask !== prevProps.clipMask) {
-    instance.clipMask = props.clipMask
-  }
-  if (props.opacity !== prevProps.opacity) {
-    instance.opacity = props.opacity
-  }
-  if (props.rotation !== prevProps.rotation) {
-    instance.rotation = props.rotation;
-  }
-  if (props.selected !== prevProps.selected) {
-    instance.selected = props.selected
-  }
-  if (props.visible !== prevProps.visible) {
-    instance.visible = props.visible
-  }
-}
+import {
+  applyArcProps,
+  applyCircleProps,
+  applyEllipseProps,
+  applyGroupProps,
+  applyLayerProps,
+  applyLineProps,
+  applyPathProps,
+  applyPointTextProps,
+  applyRasterProps,
+  applyRectangleProps,
+  applyToolProps
+} from "./props";
 
 function applyStyleProps(instance, props) {
   if (props.fillColor) {
@@ -53,236 +36,6 @@ function applyStyleProps(instance, props) {
   }
   if (props.selected) {
     instance.selected = props.selected
-  }
-}
-
-function applyGroupProps(instance, props, prevProps = {}) {
-  applyItemProps(instance, props, prevProps)
-  if (!arePointsEqual(props.center, prevProps.center)) {
-    instance.translate([
-      props.center[0] - prevProps.center[0],
-      props.center[1] - prevProps.center[1],
-    ])
-  }
-  if (!arePointsEqual(props.pivot, prevProps.pivot)) {
-    instance.pivot = props.pivot
-    instance.position = props.position
-  }
-  if (!arePointsEqual(props.position, prevProps.position)) {
-    instance.position = props.position
-  }
-  if (props.rotation !== prevProps.rotation) {
-    // in case null is set
-    const rotation = props.rotation ? props.rotation : 0
-    const prevRotation = prevProps.rotation ? prevProps.rotation : 0
-    instance.rotate(rotation - prevRotation)
-  }
-  // TODO: check if this is ok
-  if (props.strokeColor !== prevProps.strokeColor) {
-    instance.strokeColor = props.strokeColor
-  }
-  if (props.fillColor !== prevProps.fillColor) {
-    instance.fillColor = props.fillColor
-  }
-}
-
-function applyLayerProps(instance, props, prevProps = {}) {
-  applyItemProps(instance, props, prevProps)
-  if (props.active !== prevProps.active && props.active === true) {
-    instance.activate()
-  }
-  if (props.locked !== prevProps.locked) {
-    instance.locked = props.locked
-  }
-  // TODO: check if this is ok
-  if (props.strokeColor !== prevProps.strokeColor) {
-    instance.strokeColor = props.strokeColor
-    instance.children.forEach(child => {
-      if (child instanceof Path) {
-        child.strokeColor = props.strokeColor
-      }
-    })
-  }
-  if (props.fillColor !== prevProps.fillColor) {
-    instance.fillColor = props.fillColor
-  }
-}
-
-function applyPathProps(instance, props, prevProps = {}) {
-  applyItemProps(instance, props, prevProps)
-  if (!arePointsEqual(props.center, prevProps.center)) {
-    instance.translate([
-      props.center[0] - prevProps.center[0],
-      props.center[1] - prevProps.center[1],
-    ])
-  }
-  if (!arePointsEqual(props.pivot, prevProps.pivot)) {
-    instance.pivot = props.pivot
-    instance.position = props.position
-  }
-  if (!arePointsEqual(props.position, prevProps.position)) {
-    instance.position = props.position
-  }
-  if (props.closed !== prevProps.closed) {
-    instance.closed = props.closed
-  }
-  if (props.dashArray !== prevProps.dashArray) {
-    instance.dashArray = props.dashArray
-  }
-  if (props.dashOffset !== prevProps.dashOffset) {
-    instance.dashOffset = props.dashOffset
-  }
-  if (props.fillColor !== prevProps.fillColor) {
-    instance.fillColor = props.fillColor
-  }
-  if (props.pathData !== prevProps.pathData) {
-    instance.pathData = props.pathData
-  }
-  if (!arePointsEqual(props.point, prevProps.point)) {
-    instance.translate([
-      props.point[0] - prevProps.point[0],
-      props.point[1] - prevProps.point[1],
-    ])
-  }
-  if (props.rotation !== prevProps.rotation) {
-    // in case null is set
-    const rotation = props.rotation ? props.rotation : 0
-    const prevRotation = prevProps.rotation ? prevProps.rotation : 0
-    instance.rotate(rotation - prevRotation)
-  }
-  if (props.strokeCap !== prevProps.strokeCap) {
-    instance.strokeCap = props.strokeCap
-  }
-  if (props.strokeColor !== prevProps.strokeColor) {
-    instance.strokeColor = props.strokeColor
-  }
-  if (props.strokeJoin !== prevProps.strokeJoin) {
-    instance.strokeJoin = props.strokeJoin
-  }
-  if (props.strokeScaling !== prevProps.strokeScaling) {
-    instance.strokeScaling = props.strokeScaling
-  }
-  if (props.strokeWidth !== prevProps.strokeWidth) {
-    instance.strokeWidth = props.strokeWidth
-  }
-}
-
-function applyRectangleProps(instance, props, prevProps = {}) {
-  if (! (arePointsEqual(props.from, prevProps.from) && arePointsEqual(props.to, prevProps.to))) {
-    // create new instance
-    const newInstance = new Path.Rectangle(props)
-    newInstance._applyProps = applyRectangleProps
-    instance.replaceWith(newInstance)
-    // swap instance
-    fiberNode.stateNode = newInstance
-    fiberNode.alternate.stateNode = newInstance;
-    instance = newInstance
-  }
-  applyPathProps(instance, props, prevProps)
-  if (!arePointsEqual(props.size, prevProps.size)) {
-    instance.scale(
-      props.size[0] / prevProps.size[0],
-      props.size[1] / prevProps.size[1]
-    )
-  }
-}
-
-function applyLineProps(instance, props, prevProps = {}, fiberNode) {
-  if (! (arePointsEqual(props.from, prevProps.from) && arePointsEqual(props.to, prevProps.to))) {
-    // create new instance
-    const newInstance = new Path.Rectangle(props)
-    newInstance._applyProps = applyRectangleProps
-    instance.replaceWith(newInstance)
-    // swap instance
-    fiberNode.stateNode = newInstance
-    fiberNode.alternate.stateNode = newInstance;
-    instance = newInstance
-  }
-  applyPathProps(instance, props, prevProps)
-
-}
-
-
-function applyCircleProps(instance, props, prevProps = {}) {
-  applyPathProps(instance, props, prevProps)
-  if (props.radius !== prevProps.radius) {
-    instance.scale(props.radius / prevProps.radius)
-  }
-}
-
-function applyEllipseProps(instance, props, prevProps = {}) {
-  applyRectangleProps(instance, props, prevProps)
-}
-
-function applyArcProps(instance, props, prevProps = {}) {
-  applyPathProps(instance, props, prevProps)
-  if (!arePointsEqual(props.from, prevProps.from)) {
-    instance.from = props.from
-  }
-  if (!arePointsEqual(props.to, prevProps.to)) {
-    instance.to = props.to
-  }
-  if (!arePointsEqual(props.through, prevProps.through)) {
-    instance.through = props.through
-  }
-}
-
-function applyRasterProps(instance, props, prevProps = {}) {
-  applyItemProps(instance, props, prevProps)
-  if (props.source !== prevProps.source) {
-    instance.source = props.source
-  }
-  if (props.onLoad !== prevProps.onLoad) {
-    instance.onLoad = props.onLoad
-  }
-}
-
-function applyPointTextProps(instance, props, prevProps = {}) {
-  applyItemProps(instance, props, prevProps)
-  if (props.content !== prevProps.content) {
-    instance.content = props.content
-  }
-  if (props.fillColor !== prevProps.fillColor) {
-    instance.fillColor = props.fillColor
-  }
-  if (props.fontFamily !== prevProps.fontFamily) {
-    instance.fontFamily = props.fontFamily
-  }
-  if (props.fontSize !== prevProps.fontSize) {
-    instance.fontSize = props.fontSize
-  }
-  if (props.fontWeight !== prevProps.fontWeight) {
-    instance.fontWeight = props.fontWeight
-  }
-  if (!arePointsEqual(props.point, prevProps.point)) {
-    instance.translate([
-      props.point[0] - prevProps.point[0],
-      props.point[1] - prevProps.point[1],
-    ])
-  }
-}
-
-function applyToolProps(instance, props, prevProps = {}) {
-  if (props.active !== prevProps.active && props.active === true) {
-    instance.activate()
-  }
-  if (props.onMouseDown !== prevProps.onMouseDown) {
-    instance.onMouseDown = props.onMouseDown
-  }
-  if (props.onMouseDrag !== prevProps.onMouseDrag) {
-    instance.onMouseDrag = props.onMouseDrag
-  }
-  if (props.onMouseMove !== prevProps.onMouseMove) {
-    instance.onMouseMove = props.onMouseMove
-  }
-  if (props.onMouseUp !== prevProps.onMouseUp) {
-    instance.onMouseUp = props.onMouseUp
-  }
-  if (props.onKeyUp !== prevProps.onKeyUp) {
-    instance.onKeyUp = props.onKeyUp
-  }
-  if (props.onKeyDown !== prevProps.onKeyDown) {
-    instance.onKeyDown = props.onKeyDown
   }
 }
 
@@ -297,7 +50,7 @@ const PaperRenderer = Reconciler({
   },
 
   createInstance(type, props, paperScope) {
-    const { children, ...paperProps } = props
+    const {children, ...paperProps} = props
     let instance = {}
 
     switch (type) {
@@ -342,7 +95,7 @@ const PaperRenderer = Reconciler({
         instance._applyProps = applyArcProps
         break
       case TYPES.RASTER: {
-        const { onLoad, ...rasterProps } = paperProps
+        const {onLoad, ...rasterProps} = paperProps
         instance = new Raster(rasterProps)
         instance._applyProps = applyRasterProps
         if (typeof onLoad === 'function') {
@@ -361,7 +114,7 @@ const PaperRenderer = Reconciler({
 
     // apply data type
     if (!instance.data) {
-      instance.data = { type }
+      instance.data = {type}
     } else if (!instance.data.type) {
       instance.data.type = type
     }
