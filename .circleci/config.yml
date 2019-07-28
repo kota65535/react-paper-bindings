@@ -28,5 +28,5 @@ jobs:
           name: commit & push
           command: |
             git add . --all
-            git commit -m "committed by CI"
+            git diff-index --quiet HEAD || git commit -m "committed by CI"
             git push origin dist
