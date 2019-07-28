@@ -6347,10 +6347,9 @@ pacote@^8.1.6:
     unique-filename "^1.1.0"
     which "^1.3.0"
 
-paper@^0.11.8:
-  version "0.11.8"
-  resolved "https://registry.yarnpkg.com/paper/-/paper-0.11.8.tgz#c395269e23e3bb456c9f9e88a2f87f4421bfef23"
-  integrity sha512-3O5o8SntwieIlBmHjWS4hAYESiZ0yb++Outz9Rr5AN/ZFK7jfVGLANjqyIvEKIpGMImf2fQCkW64n8dkYheP5g==
+"paper@https://github.com/railroad-editor/paper.js#dist":
+  version "0.12.3"
+  resolved "https://github.com/railroad-editor/paper.js#684f1ec6f1e25adc6204d44d76b59c105703f5f1"
 
 parallel-transform@^1.1.0:
   version "1.1.0"
