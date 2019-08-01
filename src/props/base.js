@@ -9,7 +9,7 @@ export class Prop {
 
   apply(instance, props, prevProps, fiberNode) {
     if (!this.comparator.call(this, props[this.name], prevProps[this.name])) {
-      console.log(`apply to ${instance}, prop: ${this.name}`)
+      // console.log(`apply to ${instance}, prop: ${this.name}`)
       this.applier.call(this, instance, this.name, props, prevProps, fiberNode)
     }
   }
