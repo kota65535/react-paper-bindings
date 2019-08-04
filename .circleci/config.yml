@@ -17,16 +17,19 @@ jobs:
           command: |
             git config user.email "kota65535@gmail.com"
             git config user.name "Tomohiko Ozawa"
-            git checkout -t origin/dist
-            git merge master --no-edit
+            git checkout -b dist
       - run:
           name: build
           command: |
             npm install
             npm run build
       - run:
+          name: add lib folder to git
+          command: |
+            sed -i -e '/\/lib/d' .gitignore
+      - run:
           name: commit & push
           command: |
             git add . --all
             git diff-index --quiet HEAD || git commit -m "committed by CI"
-            git push origin dist
+            git push -f origin dist
