@@ -13,7 +13,8 @@ type Props = {
   width: number,
   height: number,
   settings?: Object,
-  viewProps: Object
+  viewProps: Object,
+  canvasProps: Object
 }
 
 export default class View extends Component<Props> {
@@ -41,9 +42,11 @@ export default class View extends Component<Props> {
     this.scope.view.viewSize = new Size(width, height)
 
     // Other View properties
-    Object.keys(this.props.viewProps).forEach(key => {
-      this.scope.view[key] = this.props.viewProps[key]
-    })
+    if (this.props.viewProps) {
+      Object.keys(this.props.viewProps).forEach(key => {
+        this.scope.view[key] = this.props.viewProps[key]
+      })
+    }
 
     this.mountNode = PaperRenderer.createContainer(this.scope)
 
@@ -68,8 +71,8 @@ export default class View extends Component<Props> {
   }
 
   render() {
-    const { children, width, height, ...other } = this.props
-    return <canvas {...other} ref={this.canvas} />
+    const { children, width, height, canvasProps } = this.props
+    return <canvas {...canvasProps} ref={this.canvas} />
   }
 }
 
