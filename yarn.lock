@@ -6349,7 +6349,7 @@ pacote@^8.1.6:
 
 "paper@https://github.com/railroad-editor/paper.js#dist":
   version "0.12.3"
-  resolved "https://github.com/railroad-editor/paper.js#684f1ec6f1e25adc6204d44d76b59c105703f5f1"
+  resolved "https://github.com/railroad-editor/paper.js#76fe626a361a50a314977db832c0719704a9041b"
 
 parallel-transform@^1.1.0:
   version "1.1.0"
