@@ -7,6 +7,7 @@ import PaperRenderer from './PaperRenderer'
 
 import type { Node } from 'react'
 import type { FiberRoot } from 'react-reconciler'
+import {Logger, setLogger} from './logging'
 
 type Props = {
   children?: Node,
@@ -14,7 +15,8 @@ type Props = {
   height: number,
   settings?: Object,
   viewProps: Object,
-  canvasProps: Object
+  canvasProps: Object,
+  logger?: Logger
 }
 
 export default class View extends Component<Props> {
@@ -28,7 +30,7 @@ export default class View extends Component<Props> {
   }
 
   componentDidMount() {
-    const { children, width, height, settings } = this.props
+    const { children, width, height, settings, logger } = this.props
 
     this.scope = new PaperScope()
     this.scope.setup(this.canvas.current)
@@ -46,6 +48,10 @@ export default class View extends Component<Props> {
       Object.keys(this.props.viewProps).forEach(key => {
         this.scope.view[key] = this.props.viewProps[key]
       })
+    }
+
+    if (logger) {
+      setLogger(logger)
     }
 
     this.mountNode = PaperRenderer.createContainer(this.scope)

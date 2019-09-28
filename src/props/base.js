@@ -1,4 +1,5 @@
 import {arePointsEqual, shallowEqual} from "../utils";
+import {log} from "../logging"
 
 export class Prop {
   constructor(name, {comparator = Comparators.SHALLOW, applier = Appliers.SIMPLE} = {}) {
@@ -9,7 +10,7 @@ export class Prop {
 
   apply(instance, props, prevProps, fiberNode) {
     if (!this.comparator.call(this, props[this.name], prevProps[this.name])) {
-      // console.log(`apply to ${instance}, prop: ${this.name}`)
+      log(`apply to ${instance}, prop: ${this.name}`, props[this.name], '->', prevProps[this.name])
       this.applier.call(this, instance, this.name, props, prevProps, fiberNode)
     }
   }
