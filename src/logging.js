@@ -11,6 +11,6 @@ export function setLogger(instance: Logger) {
 
 export function log(...message: any) {
   if (logger) {
-    logger.log(message)
+    logger.log(...message)
   }
 }

@@ -10,7 +10,7 @@ export class Prop {
 
   apply(instance, props, prevProps, fiberNode) {
     if (!this.comparator.call(this, props[this.name], prevProps[this.name])) {
-      log(`apply to ${instance}, prop: ${this.name}`, props[this.name], '->', prevProps[this.name])
+      log(`[react-paper-bindings] apply to ${instance}, prop: ${this.name}`, props[this.name], '->', prevProps[this.name])
       this.applier.call(this, instance, this.name, props, prevProps, fiberNode)
     }
   }
