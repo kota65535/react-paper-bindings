@@ -13,12 +13,11 @@ jobs:
           fingerprints:
             - "06:40:d7:45:f1:59:0c:f4:b5:47:1f:c0:23:60:9e:36"
       - run:
-          name: merge develop into dist
+          name: create new local branch 'dist' from master
           command: |
             git config user.email "kota65535@gmail.com"
             git config user.name "Tomohiko Ozawa"
             git checkout -b dist
-            git merge master --no-edit
       - run:
           name: build
           command: |
@@ -29,7 +28,7 @@ jobs:
           command: |
             sed -i -e '/\/lib/d' .gitignore
       - run:
-          name: commit & push
+          name: commit & push new dist branch
           command: |
             git add . --all
             git diff-index --quiet HEAD || git commit -m "committed by CI"
