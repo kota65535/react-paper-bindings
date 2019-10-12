@@ -53,6 +53,9 @@ const PaperRenderer = Reconciler({
     const {children, ...paperProps} = props
     let instance = {}
 
+    // activate this scope before creating instance
+    paperScope.activate()
+
     switch (type) {
       case TYPES.TOOL:
         instance = new Tool(paperProps)
