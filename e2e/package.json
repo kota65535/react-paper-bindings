@@ -34,7 +34,7 @@
     ]
   },
   "devDependencies": {
-    "chromedriver": "^75.1.0",
+    "chromedriver": "^77.0.0",
     "nightwatch": "^1.1.13",
     "node-resemble-js": "^0.2.0",
     "selenium-server-standalone-jar": "^3.141.5"
